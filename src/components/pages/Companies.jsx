@@ -32,9 +32,9 @@ const Companies = () => {
     filterCompanies();
   }, [companies, searchTerm]);
   
-  useEffect(() => {
+useEffect(() => {
     sortCompanies();
-  }, [filteredCompanies, sortField, sortDirection]);
+  }, [companies, searchTerm, sortField, sortDirection]);
   
   const loadCompanies = async () => {
     setLoading(true);
@@ -57,22 +57,18 @@ const Companies = () => {
     }
   };
   
-const filterCompanies = () => {
-    if (!searchTerm) {
-      setFilteredCompanies(companies);
-      return;
+const filterAndSortCompanies = () => {
+    // First filter based on search term
+    let filtered = companies;
+    if (searchTerm) {
+      filtered = companies.filter(company =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        company.industry?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     
-    const filtered = companies.filter(company =>
-      company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      company.industry?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    
-    setFilteredCompanies(filtered);
-  };
-  
-  const sortCompanies = () => {
-    const sorted = [...filteredCompanies].sort((a, b) => {
+    // Then sort the filtered results
+    const sorted = [...filtered].sort((a, b) => {
       let aValue = a[sortField] || '';
       let bValue = b[sortField] || '';
       
@@ -98,6 +94,14 @@ const filterCompanies = () => {
     });
     
     setFilteredCompanies(sorted);
+  };
+
+  const filterCompanies = () => {
+    filterAndSortCompanies();
+  };
+  
+  const sortCompanies = () => {
+    filterAndSortCompanies();
   };
   
   const handleSort = (field) => {

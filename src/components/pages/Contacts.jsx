@@ -29,9 +29,9 @@ const Contacts = () => {
     filterContacts();
   }, [contacts, searchTerm]);
   
-  useEffect(() => {
+useEffect(() => {
     sortContacts();
-  }, [filteredContacts, sortField, sortDirection]);
+  }, [contacts, searchTerm, sortField, sortDirection]);
   
   const loadContacts = async () => {
     setLoading(true);
@@ -52,23 +52,19 @@ const Contacts = () => {
     }
   };
   
-const filterContacts = () => {
-    if (!searchTerm) {
-      setFilteredContacts(contacts);
-      return;
+const filterAndSortContacts = () => {
+    // First filter based on search term
+    let filtered = contacts;
+    if (searchTerm) {
+      filtered = contacts.filter(contact =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     
-    const filtered = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    
-    setFilteredContacts(filtered);
-  };
-  
-  const sortContacts = () => {
-    const sorted = [...filteredContacts].sort((a, b) => {
+    // Then sort the filtered results
+    const sorted = [...filtered].sort((a, b) => {
       let aValue = a[sortField] || '';
       let bValue = b[sortField] || '';
       
@@ -90,6 +86,14 @@ const filterContacts = () => {
     });
     
     setFilteredContacts(sorted);
+  };
+
+  const filterContacts = () => {
+    filterAndSortContacts();
+  };
+  
+  const sortContacts = () => {
+    filterAndSortContacts();
   };
   
   const handleSort = (field) => {
