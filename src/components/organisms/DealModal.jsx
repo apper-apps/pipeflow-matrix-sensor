@@ -203,11 +203,11 @@ const DealModal = ({
                 type="select"
                 value={formData.contactId}
                 onChange={handleChange}
-              >
+>
                 <option value="">Select Contact</option>
                 {contacts.map(contact => (
                   <option key={contact.Id} value={contact.Id}>
-                    {contact.name}
+                    {contact.Name}
                   </option>
                 ))}
               </FormField>
@@ -218,11 +218,11 @@ const DealModal = ({
                 type="select"
                 value={formData.companyId}
                 onChange={handleChange}
-              >
+>
                 <option value="">Select Company</option>
                 {companies.map(company => (
                   <option key={company.Id} value={company.Id}>
-                    {company.name}
+                    {company.Name}
                   </option>
                 ))}
               </FormField>
