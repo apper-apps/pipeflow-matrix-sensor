@@ -17,8 +17,13 @@ const DealCard = ({
   const company = companies?.find(c => c.Id === deal.companyId);
   
 const formatCurrency = (amount) => {
-    // Handle null, undefined, empty string, or invalid numeric values
-    if (amount === null || amount === undefined || amount === '' || typeof amount === 'string' && amount.trim() === '') {
+    // Handle null, undefined, empty string, or invalid values
+    if (amount == null || amount === '') {
+      return '$0';
+    }
+    
+    // Handle string values that might be empty or whitespace
+    if (typeof amount === 'string' && amount.trim() === '') {
       return '$0';
     }
     
@@ -37,6 +42,7 @@ const formatCurrency = (amount) => {
       }).format(numericValue);
     } catch (error) {
       // Fallback in case of any formatting errors
+      console.warn('Currency formatting error:', error);
       return '$0';
     }
   };
