@@ -15,21 +15,36 @@ const DealCard = ({
 }) => {
   const contact = contacts?.find(c => c.Id === deal.contactId);
   const company = companies?.find(c => c.Id === deal.companyId);
-  
 const formatCurrency = (amount) => {
     // Handle null, undefined, empty string, or invalid values
-    if (amount == null || amount === '') {
+    if (amount == null || amount === '' || amount === undefined) {
       return '$0';
     }
     
     // Handle string values that might be empty or whitespace
-    if (typeof amount === 'string' && amount.trim() === '') {
+    if (typeof amount === 'string') {
+      const trimmed = amount.trim();
+      if (trimmed === '' || trimmed === 'null' || trimmed === 'undefined') {
+        return '$0';
+      }
+    }
+    
+    // Handle object or array values that shouldn't be here
+    if (typeof amount === 'object' && amount !== null) {
+      console.warn('Currency formatting received object:', amount);
       return '$0';
     }
     
-    // Convert to number and validate
-    const numericValue = Number(amount);
-    if (isNaN(numericValue) || !isFinite(numericValue)) {
+    // Convert to number and validate with additional safety checks
+    let numericValue;
+    try {
+      numericValue = Number(amount);
+    } catch (conversionError) {
+      console.warn('Currency conversion error:', conversionError);
+      return '$0';
+    }
+    
+    if (isNaN(numericValue) || !isFinite(numericValue) || numericValue < 0) {
       return '$0';
     }
     
@@ -42,8 +57,8 @@ const formatCurrency = (amount) => {
       }).format(numericValue);
     } catch (error) {
       // Fallback in case of any formatting errors
-      console.warn('Currency formatting error:', error);
-      return '$0';
+      console.warn('Currency formatting error:', error, 'for amount:', amount);
+      return `$${Math.floor(numericValue || 0)}`;
     }
   };
   
