@@ -74,8 +74,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <LogoutButton />
-            </div>
-          </div>
+</div>
+</div>
+        </div>
       </div>
       
       {/* Mobile Sidebar */}
@@ -137,14 +138,14 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-900">John Smith</p>
-<p className="text-xs text-gray-500">Sales Manager</p>
+                  <p className="text-xs text-gray-500">Sales Manager</p>
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
       </div>
-      </>
+    </>
   );
 };
 
