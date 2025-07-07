@@ -134,13 +134,18 @@ const getDealsForStage = (stage) => {
     return stageDeals.reduce((sum, deal) => sum + deal.value, 0);
   };
   
-  const formatCurrency = (amount) => {
+const formatCurrency = (amount) => {
+    // Handle null, undefined, or invalid numeric values
+    if (amount == null || isNaN(Number(amount))) {
+      return '$0';
+    }
+    
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(Number(amount));
   };
   
   if (loading) return <Loading type="pipeline" />;
