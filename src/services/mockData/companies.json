@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "name": "TechCorp Solutions",
+    "industry": "Technology",
+    "website": "https://techcorp.com",
+    "phone": "+1 (555) 123-4567",
+    "address": "123 Tech Street, San Francisco, CA 94102",
+    "userId": 1,
+    "notes": "Mid-size tech company looking to scale their operations.",
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "InnovatePlus",
+    "industry": "Software",
+    "website": "https://innovateplus.com",
+    "phone": "+1 (555) 234-5678",
+    "address": "456 Innovation Drive, Austin, TX 78701",
+    "userId": 1,
+    "notes": "Fast-growing startup with ambitious expansion plans.",
+    "createdAt": "2024-01-16T14:15:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "MarketingPro Agency",
+    "industry": "Marketing",
+    "website": "https://marketingpro.com",
+    "phone": "+1 (555) 345-6789",
+    "address": "789 Marketing Ave, New York, NY 10001",
+    "userId": 1,
+    "notes": "Digital marketing agency serving Fortune 500 clients.",
+    "createdAt": "2024-01-17T09:45:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "SalesForce Dynamics",
+    "industry": "Sales",
+    "website": "https://salesforcedynamics.com",
+    "phone": "+1 (555) 456-7890",
+    "address": "321 Sales Plaza, Chicago, IL 60601",
+    "userId": 1,
+    "notes": "Sales consulting firm with 200+ employees.",
+    "createdAt": "2024-01-18T11:20:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "StartupX Ventures",
+    "industry": "Technology",
+    "website": "https://startupx.com",
+    "phone": "+1 (555) 567-8901",
+    "address": "654 Startup Lane, Seattle, WA 98101",
+    "userId": 1,
+    "notes": "Early-stage startup with significant funding.",
+    "createdAt": "2024-01-19T16:30:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "RetailCorp",
+    "industry": "Retail",
+    "website": "https://retailcorp.com",
+    "phone": "+1 (555) 678-9012",
+    "address": "987 Retail Row, Los Angeles, CA 90210",
+    "userId": 1,
+    "notes": "Large retail chain with multiple locations.",
+    "createdAt": "2024-01-20T13:45:00Z"
+  }
+]

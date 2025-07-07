@@ -1,0 +1,80 @@
+[
+  {
+    "Id": 1,
+    "title": "Enterprise Software License",
+    "value": 25000,
+    "stage": "Lead In",
+    "expectedCloseDate": "2024-03-15",
+    "contactId": 1,
+    "companyId": 1,
+    "userId": 1,
+    "notes": "Initial contact made, showing strong interest in our enterprise solution.",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Cloud Migration Project",
+    "value": 85000,
+    "stage": "Contact Made",
+    "expectedCloseDate": "2024-04-20",
+    "contactId": 2,
+    "companyId": 2,
+    "userId": 1,
+    "notes": "Had initial call, scheduling technical demo for next week.",
+    "createdAt": "2024-01-16T14:15:00Z",
+    "updatedAt": "2024-01-16T14:15:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Digital Marketing Platform",
+    "value": 45000,
+    "stage": "Proposal Sent",
+    "expectedCloseDate": "2024-02-28",
+    "contactId": 3,
+    "companyId": 3,
+    "userId": 1,
+    "notes": "Proposal sent, awaiting feedback from their team.",
+    "createdAt": "2024-01-17T09:45:00Z",
+    "updatedAt": "2024-01-17T09:45:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "CRM Implementation",
+    "value": 35000,
+    "stage": "Negotiation",
+    "expectedCloseDate": "2024-02-15",
+    "contactId": 4,
+    "companyId": 4,
+    "userId": 1,
+    "notes": "In final negotiations, discussing pricing and timeline.",
+    "createdAt": "2024-01-18T11:20:00Z",
+    "updatedAt": "2024-01-18T11:20:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Mobile App Development",
+    "value": 120000,
+    "stage": "Won",
+    "expectedCloseDate": "2024-02-01",
+    "contactId": 5,
+    "companyId": 5,
+    "userId": 1,
+    "notes": "Contract signed! Project kicks off next month.",
+    "createdAt": "2024-01-19T16:30:00Z",
+    "updatedAt": "2024-01-19T16:30:00Z"
+  },
+  {
+    "Id": 6,
+    "title": "E-commerce Platform",
+    "value": 65000,
+    "stage": "Lost",
+    "expectedCloseDate": "2024-01-30",
+    "contactId": 6,
+    "companyId": 6,
+    "userId": 1,
+    "notes": "Lost to competitor due to pricing. Keep in touch for future opportunities.",
+    "createdAt": "2024-01-20T13:45:00Z",
+    "updatedAt": "2024-01-20T13:45:00Z"
+  }
+]

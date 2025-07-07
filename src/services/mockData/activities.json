@@ -1,0 +1,79 @@
+[
+  {
+    "Id": 1,
+    "type": "Call",
+    "description": "Initial discovery call with Sarah Johnson about enterprise software needs.",
+    "date": "2024-01-15T10:30:00Z",
+    "dealId": 1,
+    "contactId": 1,
+    "companyId": 1,
+    "userId": 1,
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "type": "Email",
+    "description": "Sent follow-up email with product information and pricing.",
+    "date": "2024-01-16T09:15:00Z",
+    "dealId": 1,
+    "contactId": 1,
+    "companyId": 1,
+    "userId": 1,
+    "createdAt": "2024-01-16T09:15:00Z"
+  },
+  {
+    "Id": 3,
+    "type": "Meeting",
+    "description": "Product demo meeting with Michael Chen and his team.",
+    "date": "2024-01-17T14:00:00Z",
+    "dealId": 2,
+    "contactId": 2,
+    "companyId": 2,
+    "userId": 1,
+    "createdAt": "2024-01-17T14:00:00Z"
+  },
+  {
+    "Id": 4,
+    "type": "Task",
+    "description": "Prepare custom proposal for MarketingPro Agency.",
+    "date": "2024-01-18T10:00:00Z",
+    "dealId": 3,
+    "contactId": 3,
+    "companyId": 3,
+    "userId": 1,
+    "createdAt": "2024-01-18T10:00:00Z"
+  },
+  {
+    "Id": 5,
+    "type": "Call",
+    "description": "Negotiation call with David Wilson about pricing and timeline.",
+    "date": "2024-01-19T15:30:00Z",
+    "dealId": 4,
+    "contactId": 4,
+    "companyId": 4,
+    "userId": 1,
+    "createdAt": "2024-01-19T15:30:00Z"
+  },
+  {
+    "Id": 6,
+    "type": "Email",
+    "description": "Sent contract and SOW to Lisa Thompson for signature.",
+    "date": "2024-01-20T11:45:00Z",
+    "dealId": 5,
+    "contactId": 5,
+    "companyId": 5,
+    "userId": 1,
+    "createdAt": "2024-01-20T11:45:00Z"
+  },
+  {
+    "Id": 7,
+    "type": "Note",
+    "description": "Deal lost to competitor. RetailCorp cited price as main factor.",
+    "date": "2024-01-21T13:20:00Z",
+    "dealId": 6,
+    "contactId": 6,
+    "companyId": 6,
+    "userId": 1,
+    "createdAt": "2024-01-21T13:20:00Z"
+  }
+]

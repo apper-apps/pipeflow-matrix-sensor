@@ -1,0 +1,11 @@
+[
+  {
+    "Id": 1,
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "phone": "+1 (555) 123-4567",
+    "companyName": "Tech Solutions Inc",
+    "industry": "Technology",
+    "createdAt": "2024-01-15T10:30:00Z"
+  }
+]
