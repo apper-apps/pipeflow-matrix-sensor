@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "name": "Sarah Johnson",
+    "Name": "Sarah Johnson",
     "email": "sarah.johnson@techcorp.com",
     "phone": "+1 (555) 234-5678",
     "jobTitle": "VP of Technology",
@@ -10,9 +10,9 @@
     "notes": "Primary decision maker for technology purchases.",
     "createdAt": "2024-01-15T10:30:00Z"
   },
-  {
+{
     "Id": 2,
-    "name": "Michael Chen",
+    "Name": "Michael Chen",
     "email": "m.chen@innovateplus.com",
     "phone": "+1 (555) 345-6789",
     "jobTitle": "CTO",
@@ -21,9 +21,9 @@
     "notes": "Tech-savvy, interested in cutting-edge solutions.",
     "createdAt": "2024-01-16T14:15:00Z"
   },
-  {
+{
     "Id": 3,
-    "name": "Emily Rodriguez",
+    "Name": "Emily Rodriguez",
     "email": "emily.r@marketingpro.com",
     "phone": "+1 (555) 456-7890",
     "jobTitle": "Marketing Director",
@@ -32,9 +32,9 @@
     "notes": "Focused on ROI and measurable results.",
     "createdAt": "2024-01-17T09:45:00Z"
   },
-  {
+{
     "Id": 4,
-    "name": "David Wilson",
+    "Name": "David Wilson",
     "email": "david.wilson@salesforce.com",
     "phone": "+1 (555) 567-8901",
     "jobTitle": "Sales Manager",
@@ -43,9 +43,9 @@
     "notes": "Looking to improve sales team efficiency.",
     "createdAt": "2024-01-18T11:20:00Z"
   },
-  {
+{
     "Id": 5,
-    "name": "Lisa Thompson",
+    "Name": "Lisa Thompson",
     "email": "l.thompson@startupx.com",
     "phone": "+1 (555) 678-9012",
     "jobTitle": "CEO",
@@ -54,9 +54,9 @@
     "notes": "Startup founder, very responsive and decisive.",
     "createdAt": "2024-01-19T16:30:00Z"
   },
-  {
+{
     "Id": 6,
-    "name": "Robert Martinez",
+    "Name": "Robert Martinez",
     "email": "r.martinez@retailcorp.com",
     "phone": "+1 (555) 789-0123",
     "jobTitle": "Operations Manager",

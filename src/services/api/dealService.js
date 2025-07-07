@@ -91,16 +91,16 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         records: [{
-          Name: dealData.Name,
+          Name: dealData.Name || dealData.title,
           title: dealData.title,
           value: parseFloat(dealData.value),
           stage: dealData.stage,
           expected_close_date: dealData.expected_close_date,
           notes: dealData.notes,
-          contact_id: parseInt(dealData.contact_id),
-          company_id: parseInt(dealData.company_id),
+          contact_id: dealData.contact_id ? parseInt(dealData.contact_id) : null,
+          company_id: dealData.company_id ? parseInt(dealData.company_id) : null,
           user_id: parseInt(dealData.user_id),
           Tags: dealData.Tags || ""
         }]

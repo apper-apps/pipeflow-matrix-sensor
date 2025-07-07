@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "name": "TechCorp Solutions",
+    "Name": "TechCorp Solutions",
     "industry": "Technology",
     "website": "https://techcorp.com",
     "phone": "+1 (555) 123-4567",
@@ -10,9 +10,9 @@
     "notes": "Mid-size tech company looking to scale their operations.",
     "createdAt": "2024-01-15T10:30:00Z"
   },
-  {
+{
     "Id": 2,
-    "name": "InnovatePlus",
+    "Name": "InnovatePlus",
     "industry": "Software",
     "website": "https://innovateplus.com",
     "phone": "+1 (555) 234-5678",
@@ -21,9 +21,9 @@
     "notes": "Fast-growing startup with ambitious expansion plans.",
     "createdAt": "2024-01-16T14:15:00Z"
   },
-  {
+{
     "Id": 3,
-    "name": "MarketingPro Agency",
+    "Name": "MarketingPro Agency",
     "industry": "Marketing",
     "website": "https://marketingpro.com",
     "phone": "+1 (555) 345-6789",
@@ -32,9 +32,9 @@
     "notes": "Digital marketing agency serving Fortune 500 clients.",
     "createdAt": "2024-01-17T09:45:00Z"
   },
-  {
+{
     "Id": 4,
-    "name": "SalesForce Dynamics",
+    "Name": "SalesForce Dynamics",
     "industry": "Sales",
     "website": "https://salesforcedynamics.com",
     "phone": "+1 (555) 456-7890",
@@ -43,9 +43,9 @@
     "notes": "Sales consulting firm with 200+ employees.",
     "createdAt": "2024-01-18T11:20:00Z"
   },
-  {
+{
     "Id": 5,
-    "name": "StartupX Ventures",
+    "Name": "StartupX Ventures",
     "industry": "Technology",
     "website": "https://startupx.com",
     "phone": "+1 (555) 567-8901",
@@ -54,9 +54,9 @@
     "notes": "Early-stage startup with significant funding.",
     "createdAt": "2024-01-19T16:30:00Z"
   },
-  {
+{
     "Id": 6,
-    "name": "RetailCorp",
+    "Name": "RetailCorp",
     "industry": "Retail",
     "website": "https://retailcorp.com",
     "phone": "+1 (555) 678-9012",

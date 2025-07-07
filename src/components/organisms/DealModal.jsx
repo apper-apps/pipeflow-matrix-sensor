@@ -97,12 +97,16 @@ const DealModal = ({
     
     setSaving(true);
     try {
-      const dealData = {
-        ...formData,
+const dealData = {
+        Name: formData.title,
+        title: formData.title,
         value: parseFloat(formData.value),
-        contactId: formData.contactId ? parseInt(formData.contactId) : null,
-        companyId: formData.companyId ? parseInt(formData.companyId) : null,
-        userId: 1 // Default user ID
+        stage: formData.stage,
+        expected_close_date: formData.expectedCloseDate,
+        notes: formData.notes,
+        contact_id: formData.contactId ? parseInt(formData.contactId) : null,
+        company_id: formData.companyId ? parseInt(formData.companyId) : null,
+        user_id: 1 // Default user ID
       };
       
       let savedDeal;
