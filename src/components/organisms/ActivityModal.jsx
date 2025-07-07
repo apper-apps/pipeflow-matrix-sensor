@@ -104,12 +104,15 @@ const ActivityModal = ({
     
     setSaving(true);
     try {
-      const activityData = {
-        ...formData,
-        dealId: formData.dealId ? parseInt(formData.dealId) : null,
-        contactId: formData.contactId ? parseInt(formData.contactId) : null,
-        companyId: formData.companyId ? parseInt(formData.companyId) : null,
-        userId: 1 // Default user ID
+const activityData = {
+        Name: formData.description, // Use description as the activity name
+        type: formData.type,
+        description: formData.description,
+        date: formData.date,
+        deal_id: formData.dealId ? parseInt(formData.dealId) : null,
+        contact_id: formData.contactId ? parseInt(formData.contactId) : null,
+        company_id: formData.companyId ? parseInt(formData.companyId) : null,
+        user_id: 1 // Default user ID
       };
       
       let savedActivity;
@@ -192,10 +195,10 @@ const ActivityModal = ({
                 value={formData.dealId}
                 onChange={handleChange}
               >
-                <option value="">Select Deal</option>
+<option value="">Select Deal</option>
                 {deals.map(deal => (
                   <option key={deal.Id} value={deal.Id}>
-                    {deal.title}
+                    {deal.title || deal.Name}
                   </option>
                 ))}
               </FormField>
@@ -207,10 +210,10 @@ const ActivityModal = ({
                 value={formData.contactId}
                 onChange={handleChange}
               >
-                <option value="">Select Contact</option>
+<option value="">Select Contact</option>
                 {contacts.map(contact => (
                   <option key={contact.Id} value={contact.Id}>
-                    {contact.name}
+                    {contact.Name}
                   </option>
                 ))}
               </FormField>
@@ -223,10 +226,10 @@ const ActivityModal = ({
                 onChange={handleChange}
                 className="md:col-span-2"
               >
-                <option value="">Select Company</option>
+<option value="">Select Company</option>
                 {companies.map(company => (
                   <option key={company.Id} value={company.Id}>
-                    {company.name}
+                    {company.Name}
                   </option>
                 ))}
               </FormField>
