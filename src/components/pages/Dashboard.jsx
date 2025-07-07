@@ -115,18 +115,18 @@ const Dashboard = () => {
     }
   };
   
-  const getRelatedEntityName = (activity) => {
-    if (activity.dealId) {
+const getRelatedEntityName = (activity) => {
+    if (activity.deal_id) {
       // For this example, we'll show the deal ID since we don't have the full deal data
-      return `Deal #${activity.dealId}`;
+      return `Deal #${activity.deal_id}`;
     }
-    if (activity.contactId) {
-      const contact = contacts.find(c => c.Id === activity.contactId);
-      return contact ? contact.name : `Contact #${activity.contactId}`;
+if (activity.contact_id) {
+      const contact = contacts.find(c => c.Id === activity.contact_id);
+      return contact ? contact.Name : `Contact #${activity.contact_id}`;
     }
-    if (activity.companyId) {
-      const company = companies.find(c => c.Id === activity.companyId);
-      return company ? company.name : `Company #${activity.companyId}`;
+if (activity.company_id) {
+      const company = companies.find(c => c.Id === activity.company_id);
+      return company ? company.Name : `Company #${activity.company_id}`;
     }
     return 'General';
   };

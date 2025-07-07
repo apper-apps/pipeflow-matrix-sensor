@@ -1,48 +1,80 @@
-import userData from '@/services/mockData/users.json';
-
-let users = [...userData];
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+import { toast } from 'react-toastify';
 
 export const userService = {
+  async getCurrentUser() {
+    try {
+      const { ApperUI } = window.ApperSDK;
+      const user = await ApperUI.getCurrentUser();
+      return user;
+    } catch (error) {
+      console.error("Error getting current user:", error);
+      return null;
+    }
+  },
+
   async getAll() {
-    await delay(300);
-    return [...users];
+    // For user management, you would typically need admin permissions
+    // and use specific user management endpoints
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      // This would need to be implemented based on your user management system
+      // For now, return empty array or implement specific user fetching logic
+      return [];
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      toast.error("Failed to load users");
+      return [];
+    }
   },
 
   async getById(id) {
-    await delay(200);
-    const user = users.find(u => u.Id === parseInt(id));
-    if (!user) throw new Error('User not found');
-    return { ...user };
+    try {
+      // This would need to be implemented based on your user management system
+      console.log("Getting user by ID:", id);
+      return null;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      toast.error("Failed to load user");
+      return null;
+    }
   },
 
   async create(userData) {
-    await delay(400);
-    const newUser = {
-      ...userData,
-      Id: Math.max(...users.map(u => u.Id), 0) + 1,
-      createdAt: new Date().toISOString()
-    };
-    users.push(newUser);
-    return { ...newUser };
+    try {
+      // User creation is typically handled through the registration process
+      // via ApperUI.showSignup() rather than direct API calls
+      console.log("User creation should be handled through ApperUI.showSignup()");
+      throw new Error("User creation should be handled through the signup process");
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error;
+    }
   },
 
   async update(id, userData) {
-    await delay(350);
-    const index = users.findIndex(u => u.Id === parseInt(id));
-    if (index === -1) throw new Error('User not found');
-    
-    users[index] = { ...users[index], ...userData };
-    return { ...users[index] };
+    try {
+      // User updates would need to be implemented based on your user management system
+      console.log("Updating user:", id, userData);
+      throw new Error("User updates not implemented");
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
   },
 
   async delete(id) {
-    await delay(250);
-    const index = users.findIndex(u => u.Id === parseInt(id));
-    if (index === -1) throw new Error('User not found');
-    
-    users.splice(index, 1);
-    return true;
+    try {
+      // User deletion would need admin permissions and proper implementation
+      console.log("Deleting user:", id);
+      throw new Error("User deletion not implemented");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      return false;
+    }
   }
 };

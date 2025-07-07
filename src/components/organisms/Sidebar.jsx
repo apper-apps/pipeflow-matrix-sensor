@@ -1,7 +1,23 @@
-import { motion } from 'framer-motion';
-import ApperIcon from '@/components/ApperIcon';
-import NavLink from '@/components/molecules/NavLink';
-import { cn } from '@/utils/cn';
+import { motion } from "framer-motion";
+import React, { useContext } from "react";
+import { AuthContext } from "@/App";
+import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
+import NavLink from "@/components/molecules/NavLink";
+
+const LogoutButton = () => {
+  const { logout } = useContext(AuthContext);
+  
+  return (
+    <button
+      onClick={logout}
+      className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
+      title="Logout"
+    >
+      <ApperIcon name="LogOut" size={16} className="text-gray-500 group-hover:text-red-500" />
+    </button>
+  );
+};
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navItems = [
@@ -40,19 +56,21 @@ const Sidebar = ({ isOpen, onClose }) => {
             ))}
           </nav>
           
-          {/* Footer */}
+{/* Footer */}
           <div className="px-6 py-4 border-t border-gray-200">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
-                <ApperIcon name="User" size={16} className="text-white" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
+                  <ApperIcon name="User" size={16} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">John Smith</p>
+                  <p className="text-xs text-gray-500">Sales Manager</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">John Smith</p>
-                <p className="text-xs text-gray-500">Sales Manager</p>
-              </div>
+              <LogoutButton />
             </div>
           </div>
-        </div>
       </div>
       
       {/* Mobile Sidebar */}
@@ -121,7 +139,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </div>
         </motion.div>
       </div>
-    </>
+</>
   );
 };
 

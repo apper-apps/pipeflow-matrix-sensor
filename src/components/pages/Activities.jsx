@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { format } from 'date-fns';
-import { toast } from 'react-toastify';
-import Header from '@/components/organisms/Header';
-import ActivityModal from '@/components/organisms/ActivityModal';
-import Loading from '@/components/ui/Loading';
-import Error from '@/components/ui/Error';
-import Empty from '@/components/ui/Empty';
-import Button from '@/components/atoms/Button';
-import Card from '@/components/atoms/Card';
-import Badge from '@/components/atoms/Badge';
-import ApperIcon from '@/components/ApperIcon';
-import { activityService } from '@/services/api/activityService';
-import { dealService } from '@/services/api/dealService';
-import { contactService } from '@/services/api/contactService';
-import { companyService } from '@/services/api/companyService';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import ActivityModal from "@/components/organisms/ActivityModal";
+import Header from "@/components/organisms/Header";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import { contactService } from "@/services/api/contactService";
+import { companyService } from "@/services/api/companyService";
+import { activityService } from "@/services/api/activityService";
+import { dealService } from "@/services/api/dealService";
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -108,7 +108,7 @@ const Activities = () => {
     }
   };
   
-  const handleDeleteActivity = async (activityId) => {
+const handleDeleteActivity = async (activityId) => {
     if (!confirm('Are you sure you want to delete this activity?')) return;
     
     try {
@@ -125,7 +125,7 @@ const Activities = () => {
   const getActivityIcon = (type) => {
     switch (type) {
       case 'Call': return 'Phone';
-      case 'Meeting': return 'Users';
+      case 'Meeting': return 'Calendar';
       case 'Email': return 'Mail';
       case 'Task': return 'CheckSquare';
       case 'Note': return 'FileText';
@@ -145,21 +145,22 @@ const Activities = () => {
   };
   
   const getRelatedEntityName = (activity) => {
+const getRelatedEntityName = (activity) => {
     const parts = [];
     
-    if (activity.dealId) {
-      const deal = deals.find(d => d.Id === activity.dealId);
+    if (activity.deal_id) {
+      const deal = deals.find(d => d.Id === activity.deal_id);
       if (deal) parts.push(`Deal: ${deal.title}`);
     }
     
-    if (activity.contactId) {
-      const contact = contacts.find(c => c.Id === activity.contactId);
-      if (contact) parts.push(`Contact: ${contact.name}`);
+    if (activity.contact_id) {
+      const contact = contacts.find(c => c.Id === activity.contact_id);
+      if (contact) parts.push(`Contact: ${contact.Name}`);
     }
     
-    if (activity.companyId) {
-      const company = companies.find(c => c.Id === activity.companyId);
-      if (company) parts.push(`Company: ${company.name}`);
+    if (activity.company_id) {
+      const company = companies.find(c => c.Id === activity.company_id);
+      if (company) parts.push(`Company: ${company.Name}`);
     }
     
     return parts.length > 0 ? parts.join(' • ') : 'General';
@@ -251,9 +252,9 @@ const Activities = () => {
                           {activity.description}
                         </p>
                         
-                        <div className="flex items-center space-x-4 text-xs text-gray-500">
+<div className="flex items-center space-x-4 text-xs text-gray-500">
                           <span>
-                            Created: {format(new Date(activity.createdAt), 'MMM d, yyyy')}
+                            Created: {format(new Date(activity.created_at), 'MMM d, yyyy')}
                           </span>
                         </div>
                       </div>

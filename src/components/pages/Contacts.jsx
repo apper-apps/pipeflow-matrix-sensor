@@ -57,9 +57,9 @@ const filterAndSortContacts = () => {
     let filtered = contacts;
     if (searchTerm) {
       filtered = contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+contact.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase())
+        contact.job_title?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -68,9 +68,9 @@ const filterAndSortContacts = () => {
       let aValue = a[sortField] || '';
       let bValue = b[sortField] || '';
       
-      if (sortField === 'companyId') {
-        aValue = getCompanyName(a.companyId);
-        bValue = getCompanyName(b.companyId);
+if (sortField === 'company_id') {
+        aValue = getCompanyName(a.company_id);
+        bValue = getCompanyName(b.company_id);
       }
       
       if (typeof aValue === 'string') {
@@ -143,9 +143,9 @@ const filterAndSortContacts = () => {
     }
   };
   
-  const getCompanyName = (companyId) => {
+const getCompanyName = (companyId) => {
     const company = companies.find(c => c.Id === companyId);
-    return company ? company.name : 'No company';
+    return company ? company.Name : 'No company';
   };
   
   if (loading) return <Loading type="list" />;
@@ -207,13 +207,13 @@ const filterAndSortContacts = () => {
                       </div>
                     </th>
                     <th 
-                      className="excel-th sortable"
-                      onClick={() => handleSort('jobTitle')}
+className="excel-th sortable"
+                      onClick={() => handleSort('job_title')}
                     >
                       <div className="flex items-center space-x-1">
                         <span>Job Title</span>
                         <ApperIcon 
-                          name={sortField === 'jobTitle' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+name={sortField === 'job_title' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'}
                           size={14} 
                         />
                       </div>
@@ -231,13 +231,13 @@ const filterAndSortContacts = () => {
                       </div>
                     </th>
                     <th 
-                      className="excel-th sortable"
-                      onClick={() => handleSort('companyId')}
+className="excel-th sortable"
+                      onClick={() => handleSort('company_id')}
                     >
                       <div className="flex items-center space-x-1">
                         <span>Company</span>
                         <ApperIcon 
-                          name={sortField === 'companyId' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+name={sortField === 'company_id' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'}
                           size={14} 
                         />
                       </div>
@@ -254,7 +254,7 @@ const filterAndSortContacts = () => {
                           <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
                             <ApperIcon name="User" size={14} className="text-white" />
                           </div>
-                          <span className="font-medium text-gray-900">{contact.name}</span>
+<span className="font-medium text-gray-900">{contact.Name}</span>
                         </div>
                       </td>
                       <td className="excel-td">
@@ -264,7 +264,7 @@ const filterAndSortContacts = () => {
                         </div>
                       </td>
                       <td className="excel-td">
-                        <span className="text-gray-700">{contact.jobTitle || '-'}</span>
+<span className="text-gray-700">{contact.job_title || '-'}</span>
                       </td>
                       <td className="excel-td">
                         {contact.phone ? (
@@ -279,7 +279,7 @@ const filterAndSortContacts = () => {
                       <td className="excel-td">
                         <div className="flex items-center space-x-2">
                           <ApperIcon name="Building" size={14} className="text-gray-400" />
-                          <span className="text-gray-700">{getCompanyName(contact.companyId)}</span>
+<span className="text-gray-700">{getCompanyName(contact.company_id)}</span>
                         </div>
                       </td>
                       <td className="excel-td">

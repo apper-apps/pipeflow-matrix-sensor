@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
-import Header from '@/components/organisms/Header';
-import DealCard from '@/components/organisms/DealCard';
-import DealModal from '@/components/organisms/DealModal';
-import Loading from '@/components/ui/Loading';
-import Error from '@/components/ui/Error';
-import Empty from '@/components/ui/Empty';
-import Button from '@/components/atoms/Button';
-import Card from '@/components/atoms/Card';
-import Badge from '@/components/atoms/Badge';
-import ApperIcon from '@/components/ApperIcon';
-import { dealService } from '@/services/api/dealService';
-import { contactService } from '@/services/api/contactService';
-import { companyService } from '@/services/api/companyService';
-import { cn } from '@/utils/cn';
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
+import DealModal from "@/components/organisms/DealModal";
+import DealCard from "@/components/organisms/DealCard";
+import Header from "@/components/organisms/Header";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import { contactService } from "@/services/api/contactService";
+import { companyService } from "@/services/api/companyService";
+import { dealService } from "@/services/api/dealService";
 
 const Deals = () => {
   const [deals, setDeals] = useState([]);
@@ -53,7 +53,7 @@ const stages = [
     
     try {
       const [dealsData, contactsData, companiesData] = await Promise.all([
-        dealService.getAll(),
+dealService.getAll(),
         contactService.getAll(),
         companyService.getAll()
       ]);
@@ -113,7 +113,7 @@ const handleDragEnd = async (result) => {
     setShowModal(true);
   };
   
-  const handleSaveDeal = (savedDeal) => {
+const handleSaveDeal = (savedDeal) => {
     if (selectedDeal) {
       // Update existing deal
       setDeals(prevDeals =>

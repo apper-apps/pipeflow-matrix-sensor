@@ -61,8 +61,8 @@ const filterAndSortCompanies = () => {
     // First filter based on search term
     let filtered = companies;
     if (searchTerm) {
-      filtered = companies.filter(company =>
-        company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+filtered = companies.filter(company =>
+        company.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         company.industry?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -151,16 +151,16 @@ const filterAndSortCompanies = () => {
     }
   };
   
-  const getCompanyContactsCount = (companyId) => {
-    return contacts.filter(contact => contact.companyId === companyId).length;
+const getCompanyContactsCount = (companyId) => {
+    return contacts.filter(contact => contact.company_id === companyId).length;
   };
   
-  const getCompanyDealsCount = (companyId) => {
-    return deals.filter(deal => deal.companyId === companyId).length;
+const getCompanyDealsCount = (companyId) => {
+    return deals.filter(deal => deal.company_id === companyId).length;
   };
   
-  const getCompanyDealsValue = (companyId) => {
-    const companyDeals = deals.filter(deal => deal.companyId === companyId);
+const getCompanyDealsValue = (companyId) => {
+    const companyDeals = deals.filter(deal => deal.company_id === companyId);
     return companyDeals.reduce((sum, deal) => sum + deal.value, 0);
   };
   
@@ -303,7 +303,7 @@ const filterAndSortCompanies = () => {
                             <ApperIcon name="Building" size={14} className="text-white" />
                           </div>
                           <div>
-                            <span className="font-medium text-gray-900">{company.name}</span>
+<span className="font-medium text-gray-900">{company.Name}</span>
                             {company.industry && (
                               <div className="mt-1">
                                 <Badge variant="secondary" className="text-xs">
