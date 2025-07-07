@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
@@ -16,9 +16,10 @@ import Loading from "@/components/ui/Loading";
 import { contactService } from "@/services/api/contactService";
 import { companyService } from "@/services/api/companyService";
 import { dealService } from "@/services/api/dealService";
+import { AuthContext } from "@/App";
 
 const Deals = () => {
-  const [deals, setDeals] = useState([]);
+const [deals, setDeals] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,9 @@ const Deals = () => {
   const [selectedDeal, setSelectedDeal] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedStage, setSelectedStage] = useState('');
+  
+  // Get authentication context
+  const { isInitialized } = useContext(AuthContext);
   
 const stages = [
     'Lead In',
@@ -44,25 +48,32 @@ const stages = [
   };
   
   useEffect(() => {
-    loadDeals();
-  }, []);
+    if (isInitialized) {
+      loadDeals();
+    }
+  }, [isInitialized]);
   
-  const loadDeals = async () => {
+const loadDeals = async () => {
+    if (!isInitialized) {
+      return;
+    }
+    
     setLoading(true);
     setError('');
     
     try {
       const [dealsData, contactsData, companiesData] = await Promise.all([
-dealService.getAll(),
+        dealService.getAll(),
         contactService.getAll(),
         companyService.getAll()
       ]);
       
-      setDeals(dealsData);
-      setContacts(contactsData);
-      setCompanies(companiesData);
+      setDeals(dealsData || []);
+      setContacts(contactsData || []);
+      setCompanies(companiesData || []);
     } catch (err) {
-      setError(err.message || 'Failed to load deals');
+      console.error('Error loading deals data:', err);
+      setError(err.message || 'Failed to load deals. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -148,9 +159,9 @@ const formatCurrency = (amount) => {
     }).format(Number(amount));
   };
   
-  if (loading) return <Loading type="pipeline" />;
+// Show loading while authentication is initializing
+  if (!isInitialized || loading) return <Loading type="pipeline" />;
   if (error) return <Error message={error} onRetry={loadDeals} />;
-  
   return (
     <div className="h-full flex flex-col">
       <Header
