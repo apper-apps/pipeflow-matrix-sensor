@@ -17,17 +17,28 @@ const DealCard = ({
   const company = companies?.find(c => c.Id === deal.companyId);
   
 const formatCurrency = (amount) => {
-    // Handle null, undefined, or invalid numeric values
-    if (amount == null || isNaN(Number(amount))) {
+    // Handle null, undefined, empty string, or invalid numeric values
+    if (amount === null || amount === undefined || amount === '' || typeof amount === 'string' && amount.trim() === '') {
       return '$0';
     }
     
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(Number(amount));
+    // Convert to number and validate
+    const numericValue = Number(amount);
+    if (isNaN(numericValue) || !isFinite(numericValue)) {
+      return '$0';
+    }
+    
+    try {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(numericValue);
+    } catch (error) {
+      // Fallback in case of any formatting errors
+      return '$0';
+    }
   };
   
   const getStageColor = (stage) => {
