@@ -4,6 +4,11 @@ import { AuthContext } from "@/App";
 import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
 import NavLink from "@/components/molecules/NavLink";
+import companies from "@/services/mockData/companies.json";
+import deals from "@/services/mockData/deals.json";
+import users from "@/services/mockData/users.json";
+import contacts from "@/services/mockData/contacts.json";
+import activities from "@/services/mockData/activities.json";
 
 const LogoutButton = () => {
   const { logout } = useContext(AuthContext);
@@ -136,10 +141,10 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-          </div>
+</div>
         </motion.div>
       </div>
-</>
+      </>
   );
 };
 

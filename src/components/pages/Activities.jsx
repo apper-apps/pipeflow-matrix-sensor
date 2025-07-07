@@ -144,7 +144,6 @@ const handleDeleteActivity = async (activityId) => {
     }
   };
   
-  const getRelatedEntityName = (activity) => {
 const getRelatedEntityName = (activity) => {
     const parts = [];
     
