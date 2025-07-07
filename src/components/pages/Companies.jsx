@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import Header from '@/components/organisms/Header';
 import CompanyModal from '@/components/organisms/CompanyModal';
@@ -7,13 +6,11 @@ import Loading from '@/components/ui/Loading';
 import Error from '@/components/ui/Error';
 import Empty from '@/components/ui/Empty';
 import Button from '@/components/atoms/Button';
-import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
 import ApperIcon from '@/components/ApperIcon';
 import { companyService } from '@/services/api/companyService';
 import { contactService } from '@/services/api/contactService';
 import { dealService } from '@/services/api/dealService';
-
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [contacts, setContacts] = useState([]);
@@ -24,6 +21,8 @@ const Companies = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortField, setSortField] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
   
   useEffect(() => {
     loadCompanies();
@@ -32,6 +31,10 @@ const Companies = () => {
   useEffect(() => {
     filterCompanies();
   }, [companies, searchTerm]);
+  
+  useEffect(() => {
+    sortCompanies();
+  }, [filteredCompanies, sortField, sortDirection]);
   
   const loadCompanies = async () => {
     setLoading(true);
@@ -54,7 +57,7 @@ const Companies = () => {
     }
   };
   
-  const filterCompanies = () => {
+const filterCompanies = () => {
     if (!searchTerm) {
       setFilteredCompanies(companies);
       return;
@@ -66,6 +69,44 @@ const Companies = () => {
     );
     
     setFilteredCompanies(filtered);
+  };
+  
+  const sortCompanies = () => {
+    const sorted = [...filteredCompanies].sort((a, b) => {
+      let aValue = a[sortField] || '';
+      let bValue = b[sortField] || '';
+      
+      if (sortField === 'contactsCount') {
+        aValue = getCompanyContactsCount(a.Id);
+        bValue = getCompanyContactsCount(b.Id);
+      } else if (sortField === 'dealsCount') {
+        aValue = getCompanyDealsCount(a.Id);
+        bValue = getCompanyDealsCount(b.Id);
+      } else if (sortField === 'dealsValue') {
+        aValue = getCompanyDealsValue(a.Id);
+        bValue = getCompanyDealsValue(b.Id);
+      } else if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+      
+      if (sortDirection === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+    
+    setFilteredCompanies(sorted);
+  };
+  
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
   };
   
   const handleCreateCompany = () => {
@@ -149,7 +190,7 @@ const Companies = () => {
         }
       />
       
-      <div className="px-6 pb-6">
+<div className="px-6 pb-6">
         {filteredCompanies.length === 0 ? (
           <Empty
             type="companies"
@@ -157,107 +198,196 @@ const Companies = () => {
             actionLabel="Add Company"
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCompanies.map((company) => (
-              <motion.div
-                key={company.Id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Card className="p-6 hover:shadow-md transition-all duration-200">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-                        <ApperIcon name="Building" size={20} className="text-white" />
+          <div className="excel-table-container">
+            <div className="excel-table-wrapper">
+              <table className="excel-table">
+                <thead>
+                  <tr>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('name')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Company</span>
+                        <ApperIcon 
+                          name={sortField === 'name' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{company.name}</h3>
-                        {company.industry && (
-                          <Badge variant="secondary" className="mt-1">
-                            {company.industry}
-                          </Badge>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('industry')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Industry</span>
+                        <ApperIcon 
+                          name={sortField === 'industry' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('website')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Website</span>
+                        <ApperIcon 
+                          name={sortField === 'website' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('phone')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Phone</span>
+                        <ApperIcon 
+                          name={sortField === 'phone' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('contactsCount')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Contacts</span>
+                        <ApperIcon 
+                          name={sortField === 'contactsCount' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('dealsCount')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Deals</span>
+                        <ApperIcon 
+                          name={sortField === 'dealsCount' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('dealsValue')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Value</span>
+                        <ApperIcon 
+                          name={sortField === 'dealsValue' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th className="excel-th">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCompanies.map((company) => (
+                    <tr key={company.Id} className="excel-row">
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                            <ApperIcon name="Building" size={14} className="text-white" />
+                          </div>
+                          <div>
+                            <span className="font-medium text-gray-900">{company.name}</span>
+                            {company.industry && (
+                              <div className="mt-1">
+                                <Badge variant="secondary" className="text-xs">
+                                  {company.industry}
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <span className="text-gray-700">{company.industry || '-'}</span>
+                      </td>
+                      <td className="excel-td">
+                        {company.website ? (
+                          <div className="flex items-center space-x-2">
+                            <ApperIcon name="Globe" size={14} className="text-gray-400" />
+                            <a
+                              href={company.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:text-primary/80 transition-colors truncate max-w-xs"
+                              title={company.website}
+                            >
+                              {company.website}
+                            </a>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">-</span>
                         )}
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => handleEditCompany(company)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        <ApperIcon name="Edit" size={16} className="text-gray-500" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteCompany(company.Id)}
-                        className="p-2 hover:bg-red-100 rounded-lg transition-colors"
-                      >
-                        <ApperIcon name="Trash2" size={16} className="text-red-500" />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    {company.website && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <ApperIcon name="Globe" size={14} />
-                        <a
-                          href={company.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-primary transition-colors"
-                        >
-                          {company.website}
-                        </a>
-                      </div>
-                    )}
-                    
-                    {company.phone && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <ApperIcon name="Phone" size={14} />
-                        <span>{company.phone}</span>
-                      </div>
-                    )}
-                    
-                    {company.address && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <ApperIcon name="MapPin" size={14} />
-                        <span>{company.address}</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Stats */}
-                  <div className="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
-                    <div className="text-center">
-                      <p className="text-lg font-semibold text-gray-900">
-                        {getCompanyContactsCount(company.Id)}
-                      </p>
-                      <p className="text-xs text-gray-500">Contacts</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-lg font-semibold text-gray-900">
-                        {getCompanyDealsCount(company.Id)}
-                      </p>
-                      <p className="text-xs text-gray-500">Deals</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-lg font-semibold text-gray-900">
-                        {formatCurrency(getCompanyDealsValue(company.Id))}
-                      </p>
-                      <p className="text-xs text-gray-500">Value</p>
-                    </div>
-                  </div>
-                  
-                  {company.notes && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-sm text-gray-600 line-clamp-2">
-                        {company.notes}
-                      </p>
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
+                      </td>
+                      <td className="excel-td">
+                        {company.phone ? (
+                          <div className="flex items-center space-x-2">
+                            <ApperIcon name="Phone" size={14} className="text-gray-400" />
+                            <span className="text-gray-700">{company.phone}</span>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-2">
+                          <ApperIcon name="Users" size={14} className="text-gray-400" />
+                          <span className="font-medium text-gray-900">
+                            {getCompanyContactsCount(company.Id)}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-2">
+                          <ApperIcon name="Briefcase" size={14} className="text-gray-400" />
+                          <span className="font-medium text-gray-900">
+                            {getCompanyDealsCount(company.Id)}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-2">
+                          <ApperIcon name="DollarSign" size={14} className="text-gray-400" />
+                          <span className="font-medium text-gray-900">
+                            {formatCurrency(getCompanyDealsValue(company.Id))}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => handleEditCompany(company)}
+                            className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+                            title="Edit company"
+                          >
+                            <ApperIcon name="Edit" size={14} className="text-gray-500" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCompany(company.Id)}
+                            className="p-1.5 hover:bg-red-100 rounded transition-colors"
+                            title="Delete company"
+                          >
+                            <ApperIcon name="Trash2" size={14} className="text-red-500" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

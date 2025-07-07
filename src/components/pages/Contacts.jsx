@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import Header from '@/components/organisms/Header';
 import ContactModal from '@/components/organisms/ContactModal';
@@ -7,12 +6,9 @@ import Loading from '@/components/ui/Loading';
 import Error from '@/components/ui/Error';
 import Empty from '@/components/ui/Empty';
 import Button from '@/components/atoms/Button';
-import Card from '@/components/atoms/Card';
-import Badge from '@/components/atoms/Badge';
 import ApperIcon from '@/components/ApperIcon';
 import { contactService } from '@/services/api/contactService';
 import { companyService } from '@/services/api/companyService';
-
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -22,6 +18,8 @@ const Contacts = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortField, setSortField] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
   
   useEffect(() => {
     loadContacts();
@@ -30,6 +28,10 @@ const Contacts = () => {
   useEffect(() => {
     filterContacts();
   }, [contacts, searchTerm]);
+  
+  useEffect(() => {
+    sortContacts();
+  }, [filteredContacts, sortField, sortDirection]);
   
   const loadContacts = async () => {
     setLoading(true);
@@ -50,7 +52,7 @@ const Contacts = () => {
     }
   };
   
-  const filterContacts = () => {
+const filterContacts = () => {
     if (!searchTerm) {
       setFilteredContacts(contacts);
       return;
@@ -63,6 +65,40 @@ const Contacts = () => {
     );
     
     setFilteredContacts(filtered);
+  };
+  
+  const sortContacts = () => {
+    const sorted = [...filteredContacts].sort((a, b) => {
+      let aValue = a[sortField] || '';
+      let bValue = b[sortField] || '';
+      
+      if (sortField === 'companyId') {
+        aValue = getCompanyName(a.companyId);
+        bValue = getCompanyName(b.companyId);
+      }
+      
+      if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+      
+      if (sortDirection === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+    
+    setFilteredContacts(sorted);
+  };
+  
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
   };
   
   const handleCreateContact = () => {
@@ -129,7 +165,7 @@ const Contacts = () => {
         }
       />
       
-      <div className="px-6 pb-6">
+<div className="px-6 pb-6">
         {filteredContacts.length === 0 ? (
           <Empty
             type="contacts"
@@ -137,72 +173,143 @@ const Contacts = () => {
             actionLabel="Add Contact"
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredContacts.map((contact) => (
-              <motion.div
-                key={contact.Id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Card className="p-6 hover:shadow-md transition-all duration-200">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-                        <ApperIcon name="User" size={20} className="text-white" />
+          <div className="excel-table-container">
+            <div className="excel-table-wrapper">
+              <table className="excel-table">
+                <thead>
+                  <tr>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('name')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Name</span>
+                        <ApperIcon 
+                          name={sortField === 'name' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{contact.name}</h3>
-                        {contact.jobTitle && (
-                          <p className="text-sm text-gray-600">{contact.jobTitle}</p>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('email')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Email</span>
+                        <ApperIcon 
+                          name={sortField === 'email' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('jobTitle')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Job Title</span>
+                        <ApperIcon 
+                          name={sortField === 'jobTitle' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('phone')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Phone</span>
+                        <ApperIcon 
+                          name={sortField === 'phone' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th 
+                      className="excel-th sortable"
+                      onClick={() => handleSort('companyId')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>Company</span>
+                        <ApperIcon 
+                          name={sortField === 'companyId' ? (sortDirection === 'asc' ? 'ChevronUp' : 'ChevronDown') : 'ChevronsUpDown'} 
+                          size={14} 
+                        />
+                      </div>
+                    </th>
+                    <th className="excel-th">Notes</th>
+                    <th className="excel-th">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredContacts.map((contact) => (
+                    <tr key={contact.Id} className="excel-row">
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                            <ApperIcon name="User" size={14} className="text-white" />
+                          </div>
+                          <span className="font-medium text-gray-900">{contact.name}</span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-2">
+                          <ApperIcon name="Mail" size={14} className="text-gray-400" />
+                          <span className="text-gray-700">{contact.email}</span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        <span className="text-gray-700">{contact.jobTitle || '-'}</span>
+                      </td>
+                      <td className="excel-td">
+                        {contact.phone ? (
+                          <div className="flex items-center space-x-2">
+                            <ApperIcon name="Phone" size={14} className="text-gray-400" />
+                            <span className="text-gray-700">{contact.phone}</span>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">-</span>
                         )}
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => handleEditContact(contact)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        <ApperIcon name="Edit" size={16} className="text-gray-500" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteContact(contact.Id)}
-                        className="p-2 hover:bg-red-100 rounded-lg transition-colors"
-                      >
-                        <ApperIcon name="Trash2" size={16} className="text-red-500" />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <ApperIcon name="Mail" size={14} />
-                      <span>{contact.email}</span>
-                    </div>
-                    
-                    {contact.phone && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <ApperIcon name="Phone" size={14} />
-                        <span>{contact.phone}</span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <ApperIcon name="Building" size={14} />
-                      <span>{getCompanyName(contact.companyId)}</span>
-                    </div>
-                  </div>
-                  
-                  {contact.notes && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-sm text-gray-600 line-clamp-2">
-                        {contact.notes}
-                      </p>
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-2">
+                          <ApperIcon name="Building" size={14} className="text-gray-400" />
+                          <span className="text-gray-700">{getCompanyName(contact.companyId)}</span>
+                        </div>
+                      </td>
+                      <td className="excel-td">
+                        {contact.notes ? (
+                          <span className="text-gray-700 truncate max-w-xs" title={contact.notes}>
+                            {contact.notes}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                      <td className="excel-td">
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => handleEditContact(contact)}
+                            className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+                            title="Edit contact"
+                          >
+                            <ApperIcon name="Edit" size={14} className="text-gray-500" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteContact(contact.Id)}
+                            className="p-1.5 hover:bg-red-100 rounded transition-colors"
+                            title="Delete contact"
+                          >
+                            <ApperIcon name="Trash2" size={14} className="text-red-500" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
