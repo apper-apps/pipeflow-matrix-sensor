@@ -39,7 +39,7 @@ const DealModal = ({
     'Lost'
   ];
   
-  useEffect(() => {
+useEffect(() => {
     if (isOpen) {
       loadData();
       if (deal) {
@@ -47,9 +47,9 @@ const DealModal = ({
           title: deal.title || '',
           value: deal.value || '',
           stage: deal.stage || stage,
-          expectedCloseDate: deal.expectedCloseDate || '',
-          contactId: deal.contactId || '',
-          companyId: deal.companyId || '',
+          expectedCloseDate: deal.expected_close_date || '',
+          contactId: deal.contact_id || '',
+          companyId: deal.company_id || '',
           notes: deal.notes || ''
         });
       } else {
