@@ -9,7 +9,7 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         fields: [
           { field: { Name: "Name" } },
           { field: { Name: "title" } },
@@ -17,8 +17,14 @@ export const dealService = {
           { field: { Name: "stage" } },
           { field: { Name: "expected_close_date" } },
           { field: { Name: "notes" } },
-          { field: { Name: "contact_id" } },
-          { field: { Name: "company_id" } },
+          { 
+            field: { Name: "contact_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
+          { 
+            field: { Name: "company_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
           { field: { Name: "user_id" } },
           { field: { Name: "created_at" } },
           { field: { Name: "updated_at" } },
@@ -50,7 +56,7 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         fields: [
           { field: { Name: "Name" } },
           { field: { Name: "title" } },
@@ -58,8 +64,14 @@ export const dealService = {
           { field: { Name: "stage" } },
           { field: { Name: "expected_close_date" } },
           { field: { Name: "notes" } },
-          { field: { Name: "contact_id" } },
-          { field: { Name: "company_id" } },
+          { 
+            field: { Name: "contact_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
+          { 
+            field: { Name: "company_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
           { field: { Name: "user_id" } },
           { field: { Name: "created_at" } },
           { field: { Name: "updated_at" } },
@@ -256,7 +268,7 @@ async update(id, dealData) {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         fields: [
           { field: { Name: "Name" } },
           { field: { Name: "title" } },
@@ -264,8 +276,14 @@ async update(id, dealData) {
           { field: { Name: "stage" } },
           { field: { Name: "expected_close_date" } },
           { field: { Name: "notes" } },
-          { field: { Name: "contact_id" } },
-          { field: { Name: "company_id" } },
+          { 
+            field: { Name: "contact_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
+          { 
+            field: { Name: "company_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
           { field: { Name: "user_id" } },
           { field: { Name: "created_at" } },
           { field: { Name: "updated_at" } },
