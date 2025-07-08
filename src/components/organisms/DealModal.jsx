@@ -48,8 +48,8 @@ useEffect(() => {
           value: deal.value || '',
           stage: deal.stage || stage,
           expectedCloseDate: deal.expected_close_date || '',
-          contactId: deal.contact_id || '',
-          companyId: deal.company_id || '',
+          contactId: deal.contact_id ? String(deal.contact_id) : '',
+          companyId: deal.company_id ? String(deal.company_id) : '',
           notes: deal.notes || ''
         });
       } else {
