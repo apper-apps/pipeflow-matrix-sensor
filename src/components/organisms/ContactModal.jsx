@@ -175,11 +175,11 @@ const ContactModal = ({
                 value={formData.companyId}
                 onChange={handleChange}
                 className="md:col-span-2"
-              >
+>
                 <option value="">Select Company</option>
                 {companies.map(company => (
                   <option key={company.Id} value={company.Id}>
-                    {company.name}
+                    {company.Name}
                   </option>
                 ))}
               </FormField>
