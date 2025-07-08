@@ -106,7 +106,7 @@ const formatCurrency = (amount) => {
           {/* Close Date */}
 <div className="flex items-center text-sm text-gray-500">
             <ApperIcon name="Calendar" size={14} className="mr-2" />
-            <span>Close: {deal.expectedCloseDate ? format(new Date(deal.expectedCloseDate), 'MMM d, yyyy') : 'No date set'}</span>
+            <span>Close: {deal.expected_close_date ? format(new Date(deal.expected_close_date), 'MMM d, yyyy') : 'No date set'}</span>
           </div>
           
           {/* Notes Preview */}

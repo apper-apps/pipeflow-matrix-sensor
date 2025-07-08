@@ -139,7 +139,7 @@ const params = {
     }
   },
 
-  async update(id, dealData) {
+async update(id, dealData) {
     try {
       const { ApperClient } = window.ApperSDK;
       const apperClient = new ApperClient({
@@ -157,8 +157,8 @@ const params = {
       if (dealData.stage !== undefined) updateData.stage = dealData.stage;
       if (dealData.expected_close_date !== undefined) updateData.expected_close_date = dealData.expected_close_date;
       if (dealData.notes !== undefined) updateData.notes = dealData.notes;
-      if (dealData.contact_id !== undefined) updateData.contact_id = parseInt(dealData.contact_id);
-      if (dealData.company_id !== undefined) updateData.company_id = parseInt(dealData.company_id);
+      if (dealData.contact_id !== undefined) updateData.contact_id = dealData.contact_id ? parseInt(dealData.contact_id) : null;
+      if (dealData.company_id !== undefined) updateData.company_id = dealData.company_id ? parseInt(dealData.company_id) : null;
       if (dealData.user_id !== undefined) updateData.user_id = parseInt(dealData.user_id);
       if (dealData.Tags !== undefined) updateData.Tags = dealData.Tags;
       
@@ -187,6 +187,14 @@ const params = {
         
         const successfulRecord = response.results.find(result => result.success);
         if (successfulRecord) {
+          // Fetch the complete updated record to ensure we have all current data
+          const updatedDeal = await this.getById(id);
+          if (updatedDeal) {
+            toast.success("Deal updated successfully");
+            return updatedDeal;
+          }
+          
+          // Fallback to the response data if fetch fails
           toast.success("Deal updated successfully");
           return successfulRecord.data;
         }
