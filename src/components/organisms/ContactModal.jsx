@@ -76,12 +76,16 @@ const ContactModal = ({
       return;
     }
     
-    setSaving(true);
+setSaving(true);
     try {
       const contactData = {
-        ...formData,
-        companyId: formData.companyId ? parseInt(formData.companyId) : null,
-        userId: 1 // Default user ID
+        Name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        job_title: formData.jobTitle,
+        notes: formData.notes,
+        company_id: formData.companyId ? parseInt(formData.companyId) : null,
+        user_id: 1 // Default user ID
       };
       
       let savedContact;
